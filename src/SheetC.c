@@ -14,6 +14,16 @@ void imprimir_personagem (pp pj){
     printf("\nVida: %d | Mana: %d\n", pj.vida, pj.mana);
 }
 
+void menu1 (int* op){
+    do{
+        printf("\tMENU LOAD\n");
+        printf("\n---------");
+        printf("\n1 - Novo Personagem\n2 - Personagem Existente");
+        printf("\n---------\n");
+        scanf(" %d", op);
+    }while (*op < 1 || *op > 2);
+}
+
 void menu (int* op){
     do{
         printf("\tMENU\n");
@@ -87,6 +97,8 @@ int main(){
     strcpy(pj.nome, "Drugo"); 
     pj.vida = 50;
     pj.mana = 45;
+    
+    menu1(&op)
     
     do{
         system("clear");
