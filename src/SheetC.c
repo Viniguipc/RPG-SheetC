@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "menusheetc.h"
+
 typedef struct pj{
 	char nome[40];
 	int mana;
@@ -12,26 +14,6 @@ void imprimir_personagem (pp pj){
 	printf("\nPersonagem atualizado: \n");
 	printf("\nNome: %s", pj.nome);
 	printf("\nVida: %d | Mana: %d\n", pj.vida, pj.mana);
-}
-
-void menu1 (int* op){
-	do{
-		printf("\tMENU LOAD\n");
-		printf("\n---------");
-		printf("\n1 - Novo Personagem\n2 - Personagem Existente");
-		printf("\n---------\n");
-		scanf(" %d", op);
-	}while (*op < 1 || *op > 2);
-}
-
-void menu (int* op){
-	do{
-		printf("\tMENU\n");
-		printf("\n---------");
-		printf("\n1 - Atualizar Vida\n2 - Atualizar Mana\n3 - Sair");
-		printf("\n---------\n");
-		scanf("%d", op);
-	}while (*op < 1 || *op > 3);
 }
 
 void atualizar_vida(pp* pj){
@@ -92,19 +74,19 @@ void atualizar_mana(pp* pj){
 
 int main(){
 	pp pj;
-	int i, op;
+	int op;
 	
 	strcpy(pj.nome, "Drugo"); 
 	pj.vida = 50;
 	pj.mana = 45;
 	
-	menu1(&op);
+	menu_load(&op);
 	
 	do{
-		printf("\e[1;1H\e[2J");
+		system("clear");
 		imprimir_personagem(pj);
 		
-		menu(&op);
+		menu_editar(&op);
 		
 		switch(op){
 			case 1:
