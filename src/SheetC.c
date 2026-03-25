@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "menusheetc.h"
-#include "personagemsheetc.h"
+#include "menusheetc.h" //Biblioteca com os menus
+#include "personagemsheetc.h" //Biblioteca com as funções para abrir e modificar a ficha do personagem, a struct tbm esta aq
 
 int main(){
 	int op;
@@ -16,5 +16,20 @@ int main(){
 	}
 	else{
 		arq = abrir_ficha();
+	}
+	
+	if (arq == NULL){
+		printf("\nERRO");
+	}
+	else{
+		menu_inoff (&op);
+		switch (op){
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
 	}
 }

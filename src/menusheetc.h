@@ -3,5 +3,6 @@
 
 void menu_load (int* op);
 void menu_editar (int* op);
+void menu_inoff (int* op);
 
 #endif

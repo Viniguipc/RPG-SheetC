@@ -14,6 +14,7 @@ void imprimir_personagem (pp pj){
 FILE* criar_ficha (){
 	pp personagem_vazio;
 	char nomearq[50];
+	FILE* arq;
 	
 	printf("\nDigite o nome do personagem: ");
 	fgets(nomearq, sizeof(nomearq), stdin);
@@ -25,7 +26,7 @@ FILE* criar_ficha (){
 	
 	if(arq == NULL){
 		printf("\nERRO");
-		return NULLL;
+		return NULL;
 	}
 	else{
 		fwrite(&personagem_vazio, sizeof(pp), 1, arq);
@@ -33,6 +34,7 @@ FILE* criar_ficha (){
 	}
 }
 
+//Função para abrir ficha existente - Adicionar um modo de ver os arquivos na pasta para poder abrir e evitar erro de digitação
 FILE* abrir_ficha(){
 	char nomearq[50];
 	FILE *arq;
@@ -53,6 +55,7 @@ FILE* abrir_ficha(){
 	}
 }
 
+//Função para atualizar vida - uso antigo, atualizar para arquivo
 void atualizar_vida(pp* pj){
 	int op, vida;
 	
@@ -81,6 +84,7 @@ void atualizar_vida(pp* pj){
 	}
 }
 
+//Função para atualizar mana - uso antigo, atualizar para arquivo
 void atualizar_mana(pp* pj){
 	int op, mana;
 	
