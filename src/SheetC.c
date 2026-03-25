@@ -9,6 +9,8 @@ int main(){
 	pp pj;
 	int op;
 	
+	criar_ficha();
+	
 	strcpy(pj.nome, "Drugo"); 
 	pj.vida = 50;
 	pj.mana = 45;

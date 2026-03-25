@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "personagemsheetc.h"
 
+//Função para imprimir os dados do personagem - uso antigo, alterar para arquivos
 void imprimir_personagem (pp pj){
 	printf("\nPersonagem atualizado: \n");
 	printf("\nNome: %s", pj.nome);
@@ -11,9 +13,24 @@ void imprimir_personagem (pp pj){
 //Função para criar arquivo.sheet com os dados do personagem vazio
 void criar_ficha (){
 	pp personagem_vazio;
+	char nomearq[50];
 	FILE *arq;
 	
+	printf("\nDigite o nome do personagem: ");
+	fgets(nomearq, sizeof(nomearq), stdin);
 	
+	nomearq[strcspn(nomearq, "\n")] = 0;
+	
+	strcat(nomearq, ".sheet");
+	arq = fopen(nomearq, "wb");
+	
+	if(arq == NULL){
+		printf("\nERRO");
+	}
+	else{
+		fwrite(&personagem_vazio, sizeof(pp), 1, arq);
+		fclose(arq);
+	}
 }
 
 void atualizar_vida(pp* pj){
