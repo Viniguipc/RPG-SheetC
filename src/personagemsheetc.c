@@ -11,10 +11,9 @@ void imprimir_personagem (pp pj){
 }
 
 //Função para criar arquivo.sheet com os dados do personagem vazio
-void criar_ficha (){
+FILE* criar_ficha (){
 	pp personagem_vazio;
 	char nomearq[50];
-	FILE *arq;
 	
 	printf("\nDigite o nome do personagem: ");
 	fgets(nomearq, sizeof(nomearq), stdin);
@@ -26,10 +25,31 @@ void criar_ficha (){
 	
 	if(arq == NULL){
 		printf("\nERRO");
+		return NULLL;
 	}
 	else{
 		fwrite(&personagem_vazio, sizeof(pp), 1, arq);
-		fclose(arq);
+		return arq;
+	}
+}
+
+FILE* abrir_ficha(){
+	char nomearq[50];
+	FILE *arq;
+	
+	printf("\nDigite o nome do arquivo .sheet");
+	fgets(nomearq, sizeof(nomearq), stdin);
+	
+	nomearq[strcspn(nomearq, "\n")] = 0;
+	strcat(nomearq, ".sheet");
+	arq = fopen(nomearq, "");
+	
+	if(arq == NULL){
+		printf("\nERRO");
+		return NULL;
+	}
+	else{
+		return arq;
 	}
 }
 

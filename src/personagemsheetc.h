@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #ifndef PERSONAGEMSHEETC_H
 #define PERSONAGEMSHEETC_H
 
@@ -11,7 +13,8 @@ typedef struct pj{
 
 void imprimir_personagem (pp pj);
 
-void criar_ficha ();
+FILE* criar_ficha ();
+FILE* abrir_ficha ();
 
 void atualizar_vida(pp* pj);
 void atualizar_mana(pp* pj);
