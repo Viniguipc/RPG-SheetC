@@ -25,11 +25,14 @@ int main(){
 		menu_inoff (&op);
 		switch (op){
 			case 1:
+				imprimir_personagem(arq);
 				break;
 			case 2:
 				break;
 			case 3:
 				break;
 		}
+		
+		fclose(arq);
 	}
 }

@@ -4,10 +4,14 @@
 #include "personagemsheetc.h"
 
 //Função para imprimir os dados do personagem - uso antigo, alterar para arquivos
-void imprimir_personagem (pp pj){
+void imprimir_personagem (FILE* sheet){
+	pp ficha;
+	
+	fread(&ficha, sizeof(struct pj), 1, sheet);
+	
 	printf("\nPersonagem atualizado: \n");
-	printf("\nNome: %s", pj.nome);
-	printf("\nVida: %d | Mana: %d\n", pj.vida, pj.mana);
+	printf("\nNome: %s", ficha.nome);
+	printf("\nVida: %d | Mana: %d\n", ficha.vida, ficha.mana);
 }
 
 //Função para criar arquivo.sheet com os dados do personagem vazio
@@ -15,11 +19,16 @@ FILE* criar_ficha (){
 	pp personagem_vazio;
 	char nomearq[50];
 	FILE* arq;
+	int i;
+	
+	getchar();
 	
 	printf("\nDigite o nome do personagem: ");
 	fgets(nomearq, sizeof(nomearq), stdin);
 	
 	nomearq[strcspn(nomearq, "\n")] = 0;
+	
+	strcpy(personagem_vazio.nome, nomearq);
 	
 	strcat(nomearq, ".sheet");
 	arq = fopen(nomearq, "wb");
@@ -29,8 +38,25 @@ FILE* criar_ficha (){
 		return NULL;
 	}
 	else{
-		fwrite(&personagem_vazio, sizeof(pp), 1, arq);
-		return arq;
+		personagem_vazio.vida = 0;
+		personagem_vazio.nivel = 0;
+		personagem_vazio.mana = 0;
+		personagem_vazio.defesa = 0;
+		
+		for(i = 0; i < 6; i++){
+			personagem_vazio.atributos[i] = 0;
+		}
+		fwrite(&personagem_vazio, sizeof(struct pj), 1, arq);
+				
+		fclose(arq);
+		arq = fopen(nomearq, "rb");
+		
+		if(arq == NULL){
+			printf("\nERRO");
+		}
+		else{
+			return arq;	
+		}
 	}
 }
 
@@ -39,16 +65,17 @@ FILE* abrir_ficha(){
 	char nomearq[50];
 	FILE *arq;
 	
-	printf("\nDigite o nome do arquivo .sheet");
+	printf("\nDigite o nome do arquivo .sheet: ");
+	getchar();
 	fgets(nomearq, sizeof(nomearq), stdin);
 	
 	nomearq[strcspn(nomearq, "\n")] = 0;
 	strcat(nomearq, ".sheet");
-	arq = fopen(nomearq, "");
+	arq = fopen(nomearq, "rb");
 	
 	if(arq == NULL){
 		printf("\nERRO");
-		return NULL;
+		return arq;
 	}
 	else{
 		return arq;

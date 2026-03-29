@@ -13,7 +13,7 @@ typedef struct pj{
 	int nivel;
 }pp;
 
-void imprimir_personagem (pp pj);
+void imprimir_personagem (FILE* sheet);
 
 FILE* criar_ficha ();
 FILE* abrir_ficha ();
