@@ -26,6 +26,10 @@ int main(){
 		switch (op){
 			case 1:
 				imprimir_personagem(arq);
+				
+				do_zero(arq, op);
+				
+				imprimir_personagem(arq);
 				break;
 			case 2:
 				break;

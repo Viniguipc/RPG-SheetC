@@ -6,8 +6,8 @@
 //Struct com as informações principais do personagem
 typedef struct pj{
 	char nome[40];
-	int mana;
-	int vida;
+	int mana[2];
+	int vida[2];
 	int atributos[6];
 	int defesa;
 	int nivel;
@@ -18,9 +18,8 @@ void imprimir_personagem (FILE* sheet);
 FILE* criar_ficha ();
 FILE* abrir_ficha ();
 
-void atualizar_vida(pp* pj);
-void atualizar_mana(pp* pj);
-
-
+void atualizar_vida(FILE* arq);
+void atualizar_mana(FILE* arq);
+void do_zero(FILE* arq);
 
 #endif

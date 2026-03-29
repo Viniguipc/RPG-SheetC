@@ -26,10 +26,20 @@ void menu_editar (int* op){
 //Função Menu que pergunta se gostaria de editar a ficha ou usar durante a sessão
 void menu_inoff (int* op){
 	do{
-		printf("\tMENU IN\\OFF\n");
+		printf("\n\tMENU IN\\OFF\n");
 		printf("\n---------");
 		printf("\n1 - Adicionar Informações do Zero\n2 - Modificar Ficha\n3 - Upar Ficha\n4 - In Game");
 		printf("\n---------\n");
 		scanf(" %d", op);
 	}while (*op < 1 || *op > 4);
+}
+
+void menu_zero (int* op){
+	do{
+		printf("\n\tMENU EDI��O ZERO\n");
+		printf("\n---------");
+		printf("\n1 - Vida\n2 - Mana\n3 - Nivel\n4 - Defesa\n5 - Atributos\n6 - Sair");
+		printf("\n---------\n");
+		scanf(" %d", op);
+	}while (*op < 1 || *op > 6);
 }

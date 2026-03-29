@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "personagemsheetc.h"
 
-//Função para imprimir os dados do personagem - uso antigo, alterar para arquivos
+//Função para imprimir os dados do personagem
 void imprimir_personagem (FILE* sheet){
 	pp ficha;
 	
 	fread(&ficha, sizeof(struct pj), 1, sheet);
 	
 	printf("\nPersonagem atualizado: \n");
-	printf("\nNome: %s", ficha.nome);
-	printf("\nVida: %d | Mana: %d\n", ficha.vida, ficha.mana);
+	printf("\nNome: %s, NV %d", ficha.nome, ficha.nivel);
+	printf("\nVida: %d / %d | Mana: %d / %d\n", ficha.vida[0], ficha.vida[1], ficha.mana[0], ficha.mana[1]);
+	printf("\nDefesa: %d", ficha.defesa);
+	printf("\nFor %d, Des %d, Con %d, Int %d, Sab %d, Car %d\n", ficha.atributos[0], ficha.atributos[1], ficha.atributos[2], ficha.atributos[3], ficha.atributos[4], ficha.atributos[5]);
 }
 
 //Função para criar arquivo.sheet com os dados do personagem vazio
@@ -38,9 +41,11 @@ FILE* criar_ficha (){
 		return NULL;
 	}
 	else{
-		personagem_vazio.vida = 0;
+		personagem_vazio.vida[0] = 0;
+		personagem_vazio.vida[1] = 0;
 		personagem_vazio.nivel = 0;
-		personagem_vazio.mana = 0;
+		personagem_vazio.mana[0] = 0;
+		personagem_vazio.mana[1] = 0;
 		personagem_vazio.defesa = 0;
 		
 		for(i = 0; i < 6; i++){
@@ -49,7 +54,7 @@ FILE* criar_ficha (){
 		fwrite(&personagem_vazio, sizeof(struct pj), 1, arq);
 				
 		fclose(arq);
-		arq = fopen(nomearq, "rb");
+		arq = fopen(nomearq, "rb+");
 		
 		if(arq == NULL){
 			printf("\nERRO");
@@ -71,7 +76,7 @@ FILE* abrir_ficha(){
 	
 	nomearq[strcspn(nomearq, "\n")] = 0;
 	strcat(nomearq, ".sheet");
-	arq = fopen(nomearq, "rb");
+	arq = fopen(nomearq, "rb+");
 	
 	if(arq == NULL){
 		printf("\nERRO");
@@ -83,8 +88,12 @@ FILE* abrir_ficha(){
 }
 
 //Função para atualizar vida - uso antigo, atualizar para arquivo
-void atualizar_vida(pp* pj){
+void atualizar_vida(FILE* arq){
+	pp pj;
 	int op, vida;
+	
+	rewind(arq);
+	fread(&pj, sizeof(struct pj), 1, arq);
 	
 	do{
 		printf("\n1 - Aumentar\n2 - Diminuir\n");
@@ -98,22 +107,30 @@ void atualizar_vida(pp* pj){
 				scanf(" %d", &vida);
 			}while (vida < 0);
 			
-			pj->vida = pj->vida + vida;
+			pj.vida[0] = pj.vida[0] + vida;
 			break;
 		case 2:
 			do{
 				printf("\nDigite a vida perdida: ");
 				scanf(" %d", &vida);
-				
-				pj->vida = pj->vida - vida;
 			}while (vida < 0);
+			
+			pj.vida[0] = pj.vida[0] - vida;
 			break;    
 	}
+	
+	rewind(arq);
+	fwrite(&pj, sizeof(struct pj), 1, arq);
+	rewind(arq);
 }
 
 //Função para atualizar mana - uso antigo, atualizar para arquivo
-void atualizar_mana(pp* pj){
+void atualizar_mana(FILE* arq){
+	pp pj;
 	int op, mana;
+	
+	rewind(arq);
+	fread(&pj, sizeof(struct pj), 1, arq);
 	
 	do{
 		printf("\n1 - Aumentar\n2 - Diminuir\n");
@@ -127,16 +144,43 @@ void atualizar_mana(pp* pj){
 				scanf(" %d", &mana);
 			}while (mana < 0);
 			
-			pj->mana = pj->mana + mana;
+			pj.mana[0] = pj.mana[0] + mana;
 			break;
 		case 2:
 			do{
-				printf("\nDigite a vida perdida: ");
+				printf("\nDigite a mana perdida: ");
 				scanf(" %d", &mana);
-				
-				pj->mana = pj->mana - mana;
 			}while (mana < 0);
+			
+			pj.mana[0] = pj.mana[0] - mana;
 			break;    
 	}
+	
+	rewind(arq);
+	fwrite(&pj, sizeof(struct pj), 1, arq);
+	rewind(arq);
+}
+
+void do_zero(FILE* arq){
+	int op;
+	
+	do{
+		menu_zero(&op);
+		
+		switch (op){
+			case 1:
+				atualizar_vida(arq);
+				break;
+			case 2:
+				atualizar_mana(arq);
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;		
+		}
+	}while (op != 6);
 }
 
