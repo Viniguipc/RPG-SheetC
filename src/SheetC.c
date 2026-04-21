@@ -26,6 +26,7 @@ int main(){
 			case 2:
 				break;
 			case 4:
+				menu_criar_ficha(&estado_atual);
 				break;
 			case 5:
 				break;
