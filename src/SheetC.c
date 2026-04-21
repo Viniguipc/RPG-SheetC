@@ -2,41 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "menusheetc.h" //Biblioteca com os menus
-#include "personagemsheetc.h" //Biblioteca com as funções para abrir e modificar a ficha do personagem, a struct tbm esta aq
+#include "raylib.h"
+#include "menu.h"
 
 int main(){
-	int op;
-	FILE *arq;
 	
-	menu_load(&op);
+	//variaveis
+	int estado_atual;
+
+	//inizializa a window
+	InitWindow(GetScreenWidth(), GetScreenHeight(), "RPG Sheet C");
+	SetTargetFPS(60);
 	
-	if (op == 1){
-		arq = criar_ficha();
-	}
-	else{
-		arq = abrir_ficha();
-	}
-	
-	if (arq == NULL){
-		printf("\nERRO");
-	}
-	else{
-		menu_inoff (&op);
-		switch (op){
+	while (!WindowShouldClose()){
+		switch(estado_atual){
+
+			case 0:
+				menu_incial(&estado_atual);
+				break;
 			case 1:
-				imprimir_personagem(arq);
-				
-				do_zero(arq, op);
-				
-				imprimir_personagem(arq);
 				break;
 			case 2:
 				break;
-			case 3:
+			default:
 				break;
 		}
-		
-		fclose(arq);
 	}
+
+	CloseWindow();
+
+	return 0;
 }
