@@ -14,17 +14,22 @@ int main(){
 	InitWindow(GetScreenWidth(), GetScreenHeight(), "RPG Sheet C");
 	SetTargetFPS(60);
 	
-	while (!WindowShouldClose()){
+	while (!WindowShouldClose() && estado_atual != 3){
 		switch(estado_atual){
 
 			case 0:
 				menu_incial(&estado_atual);
 				break;
 			case 1:
+				menu_load(&estado_atual);
 				break;
 			case 2:
 				break;
-			default:
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
 				break;
 		}
 	}
