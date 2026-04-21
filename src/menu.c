@@ -108,8 +108,22 @@ void menu_criar_ficha(int *estado){
 
     //Se pressionar Enter
     if(IsKeyPressed(KEY_ENTER)){
-        if(opcao_atual == num_opcoes){
-            *estado = 0;
+        switch(opcao_atual){
+            case 1:
+                criar_sheet_t20();
+                break;
+            case 2:
+                *estado = 5;
+                break;
+            case 3:
+                *estado = 0;
+                break;
+            case 4:
+                *estado = 0;
+                break;
+            case 5:
+                *estado = 0;
+                break;
         }
         opcao_atual = 1;
     }
@@ -146,4 +160,25 @@ void menu_criar_ficha(int *estado){
             }
         }
 	EndDrawing();
+}
+
+void nome(char *nome){
+    static char nome_temp[50], digito;
+    static int count = 0;
+
+	if(count < 50){
+        digito = GetCharPressed();
+        if(digito != 0){
+            nome_temp[count] = digito;
+            count++;
+        }
+    }
+
+    if(IsKeyPressed(KEY_ENTER)){
+        *nome = nome_temp;
+        count = 0;
+        nome_temp[0] = '\0';
+    }
+
+    DrawText(nome_temp, (GetScreenWidth() - MeasureText(nome_temp, GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50), GetScreenHeight() * 0.05, BLACK);
 }
