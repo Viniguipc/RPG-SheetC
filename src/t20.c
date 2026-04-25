@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "t20.h"
+#include <string.h>
 
 // Função responsável por instanciar e preencher uma nova ficha de Tormenta 20
 void criar_sheet_t20(){
@@ -30,10 +31,25 @@ void criar_sheet_t20(){
 
 // Carrega os dados de uma ficha T20 (A ser implementado)
 void load_sheet_t20(T20 *t20){
+    FILE *arq;
 
+    arq = fopen(t20->nome, "rb");
+    if(arq == NULL){
+        DrawText("Erro ao abrir arquivo!", 100, 100, 20, RED);
+    }
+    fread(t20, sizeof(T20), 1, arq);
+    fclose(arq);
 }
 
 // Salva os dados de uma ficha T20 (A ser implementado)
 void save_sheet_t20(T20 *t20){
-    
+    FILE *arq;
+
+
+    arq = fopen(t20->nome, "wb");
+    if(arq == NULL){
+        DrawText("Erro ao abrir arquivo!", 100, 100, 20, RED);
+    }
+    fwrite(t20, sizeof(T20), 1, arq);
+    fclose(arq);
 }
