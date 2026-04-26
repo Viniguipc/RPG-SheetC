@@ -201,6 +201,8 @@ void nome(char *nome){
 
     BeginDrawing();
         ClearBackground(RAYWHITE);
+        DrawText("RPG Sheet C", (GetScreenWidth() - MeasureText("RPG Sheet C", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.20), GetScreenHeight() * 0.10, BLACK);
+        DrawText("Digite o nome do personagem: ", (GetScreenWidth() - MeasureText("Digite o nome do personagem: ", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.30), GetScreenHeight() * 0.10, BLACK);
         DrawText(nome, (GetScreenWidth() - MeasureText(nome, GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50), GetScreenHeight() * 0.05, BLACK);
     EndDrawing();
 }
