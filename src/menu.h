@@ -1,6 +1,5 @@
 #ifndef MENU_H
 #define MENU_H
-#include "structs.h"
 
 // Exibe o menu principal do aplicativo e altera o estado do jogo
 void menu_incial(int *estado);

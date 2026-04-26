@@ -1,32 +1,58 @@
 #include "raylib.h"
 #include "t20.h"
 #include <string.h>
+#include <stdio.h>
+#include "menu.h"
 
 // Função responsável por instanciar e preencher uma nova ficha de Tormenta 20
-void criar_sheet_t20(){
-    T20 new_sheet;
+int criar_sheet_t20(){
+    static int estado_t20 = 0;
+    static T20 new_sheet;
 
-	// Chama a função de input de texto para definir o nome do personagem
-	nome(&new_sheet.nome);
-    
-    // Inicialização dos atributos padrões de uma nova ficha
-    new_sheet.sistema = 1;
-    new_sheet.raca = "";
-    new_sheet.classe = "";
-    new_sheet.nivel = 1;
-    new_sheet.experiencia = 0;
-    new_sheet.pv = 10;
-    new_sheet.pm = 5;
-    new_sheet.mana = 0;
-    new_sheet.carisma = 10;
-    new_sheet.constituicao = 10;
-    new_sheet.destreza = 10;
-    new_sheet.forca = 10;
-    new_sheet.inteligencia = 10;
-    new_sheet.sabedoria = 10;
+    switch(estado_t20){
+        case 0:
+            nome(new_sheet.nome);
+            if(IsKeyReleased(KEY_ENTER)){
+                estado_t20 = 1;
+            }
+            break;
+        case 1:
+            nome(new_sheet.raca);
+            if(IsKeyReleased(KEY_ENTER)){
+                estado_t20 = 2;
+            }
+            break;
+        case 2:
+            nome(new_sheet.classe);
+            if(IsKeyReleased(KEY_ENTER)){
+                estado_t20 = 3;
+            }
+            break;
+        case 3:
+            // Inicialização dos atributos padrões de uma nova ficha
+            new_sheet.sistema = 1;
+            new_sheet.nivel = 1;
+            new_sheet.experiencia = 0;
+            new_sheet.pv = 10;
+            new_sheet.pm = 5;
+            new_sheet.mana = 0;
+            new_sheet.carisma = 10;
+            new_sheet.constituicao = 10;
+            new_sheet.destreza = 10;
+            new_sheet.forca = 10;
+            new_sheet.inteligencia = 10;
+            new_sheet.sabedoria = 10;
 
-    // Salva a ficha recém-criada
-    save_sheet_t20(&new_sheet);
+            // Salva a ficha recém-criada
+            save_sheet_t20(&new_sheet);
+            estado_t20 = 4;
+            break;
+        case 4:
+            return 6;
+            break;
+    }
+
+    return 4;
 }
 
 // Carrega os dados de uma ficha T20 (A ser implementado)

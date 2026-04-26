@@ -4,9 +4,9 @@
 // Estrutura que representa a ficha de um personagem no sistema Tormenta 20
 typedef struct {
     int sistema;          // Identificador do sistema
-    char *nome;           // Nome do personagem
-    char *raca;           // Raça do personagem
-    char *classe;         // Classe do personagem
+    char nome[30];        // Nome do personagem
+    char raca[20];        // Raça do personagem
+    char classe[20];      // Classe do personagem
     int nivel;            // Nível atual do personagem
     int experiencia;      // Pontos de experiência (XP)
     int pv;               // Pontos de Vida
@@ -22,7 +22,7 @@ typedef struct {
 } T20;
 
 // Função para criar uma nova ficha de T20 interativamente
-void criar_sheet_t20();
+int criar_sheet_t20();
 // Função para carregar uma ficha de T20 do disco
 void load_sheet_t20(T20 *t20);
 // Função para salvar a ficha de T20 no disco
