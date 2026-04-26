@@ -105,11 +105,44 @@ void menu_load(int *estado){
 
 // Função que renderiza e controla a tela de seleção do sistema de RPG
 void menu_criar_ficha(int *estado){
-	static int opcao_atual = 0, temp = 0, sistema = 0; // Guarda o sistema de RPG selecionado
+	static int opcao_atual = 1, temp = 0, sistema = 0; // Guarda o sistema de RPG selecionado
 	char *opcoes[] = {"Tormenta 20", "Dungeons and Dragons 5th Edition", "Fabula Ultima", "3d&t Victory", "Voltar"};
 	int num_opcoes = 5;
 
     switch(sistema){
+        case 0:
+            if (IsKeyPressed(KEY_DOWN)){
+                if(opcao_atual == num_opcoes){
+                    opcao_atual = 1;
+                }
+                else{
+                    opcao_atual++;
+                }
+            }
+            if (IsKeyPressed(KEY_UP)){
+                if(opcao_atual == 1){
+                    opcao_atual = num_opcoes;
+                }
+                else{
+                    opcao_atual--;
+                }
+            }
+
+            //Draw
+		    BeginDrawing();
+		    ClearBackground(RAYWHITE);
+            DrawText("RPG Sheet C", (GetScreenWidth() - MeasureText("RPG Sheet C", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.20), GetScreenHeight() * 0.10, BLACK);
+
+            for(int i = 0; i < num_opcoes; i++){
+		        if(i + 1 != opcao_atual){
+			        DrawText(opcoes[i], (GetScreenWidth() - MeasureText(opcoes[i], GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50) + (i * (GetScreenHeight() * 0.05)), GetScreenHeight() * 0.05, BLACK);
+			    }
+                else{
+                    DrawText(opcoes[i], (GetScreenWidth() - MeasureText(opcoes[i], GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50) + (i * (GetScreenHeight() * 0.05)), GetScreenHeight() * 0.05, RED);
+                }
+            }
+	        EndDrawing();   
+            break;
         case 1:
             temp = criar_sheet_t20(); // Chama a função que inicia a criação para T20
             if(temp != 4){
@@ -135,39 +168,6 @@ void menu_criar_ficha(int *estado){
         sistema = opcao_atual;
         opcao_atual = 1; // Reseta a seleção
     }
-
-    //Movimentação entre as opções
-    if (IsKeyPressed(KEY_DOWN)){
-        if(opcao_atual == num_opcoes){
-            opcao_atual = 1;
-        }
-        else{
-            opcao_atual++;
-        }
-    }
-    if (IsKeyPressed(KEY_UP)){
-        if(opcao_atual == 1){
-            opcao_atual = num_opcoes;
-        }
-        else{
-            opcao_atual--;
-        }
-    }
-
-    //Draw
-	BeginDrawing();
-		ClearBackground(RAYWHITE);
-        DrawText("RPG Sheet C", (GetScreenWidth() - MeasureText("RPG Sheet C", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.20), GetScreenHeight() * 0.10, BLACK);
-
-        for(int i = 0; i < num_opcoes; i++){
-			if(i + 1 != opcao_atual){
-				DrawText(opcoes[i], (GetScreenWidth() - MeasureText(opcoes[i], GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50) + (i * (GetScreenHeight() * 0.05)), GetScreenHeight() * 0.05, BLACK);
-			}
-            else{
-                DrawText(opcoes[i], (GetScreenWidth() - MeasureText(opcoes[i], GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50) + (i * (GetScreenHeight() * 0.05)), GetScreenHeight() * 0.05, RED);
-            }
-        }
-	EndDrawing();
 }
 
 // Função para capturar e exibir a digitação de texto do usuário (ex: digitar o nome do personagem)
@@ -186,8 +186,21 @@ void nome(char *nome){
         }
     }
 
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        count--;
+        if(count < 0){
+            count = 0;
+        }
+        nome[count] = '\0';
+    }
+
     // Se pressionar Enter, finaliza a digitação e passa o texto para o ponteiro de destino
     if(IsKeyPressed(KEY_ENTER)){
         count = 0; 
     }
+
+    BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawText(nome, (GetScreenWidth() - MeasureText(nome, GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50), GetScreenHeight() * 0.05, BLACK);
+    EndDrawing();
 }
