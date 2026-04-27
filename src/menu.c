@@ -1,5 +1,7 @@
 #include "menu.h"
 #include "raylib.h"
+#include "t20.h"
+#include <string.h>
 
 // Função que renderiza e controla a lógica do Menu Inicial
 void menu_incial(int *estado){
@@ -171,7 +173,7 @@ void menu_criar_ficha(int *estado){
 }
 
 // Função para capturar e exibir a digitação de texto do usuário (ex: digitar o nome do personagem)
-void nome(char *nome){
+void digitar_nome(char *nome){
     // Variáveis estáticas para não perder o estado do texto digitado entre as atualizações de tela
     static char digito;
     static int count = 0; // Controla a quantidade de caracteres já digitados
@@ -204,5 +206,56 @@ void nome(char *nome){
         DrawText("RPG Sheet C", (GetScreenWidth() - MeasureText("RPG Sheet C", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.20), GetScreenHeight() * 0.10, BLACK);
         DrawText("Digite o nome do personagem: ", (GetScreenWidth() - MeasureText("Digite o nome do personagem: ", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.30), GetScreenHeight() * 0.10, BLACK);
         DrawText(nome, (GetScreenWidth() - MeasureText(nome, GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50), GetScreenHeight() * 0.05, BLACK);
+    EndDrawing();
+}
+
+void escolher_raca(char *raca){
+    static int opcao_atual = 1;
+    char *opcoes[] = {"Humano", "Elfo", "Anão", "Goblin", "Minotauro", "Draconato"};
+    int num_opcoes = 6;
+
+    if(IsKeyPressed(KEY_RIGHT)){
+        if(opcao_atual == num_opcoes){
+            opcao_atual = 1;
+        }
+        else{
+            opcao_atual++;
+        }
+    }
+    if(IsKeyPressed(KEY_LEFT)){
+        if(opcao_atual == 1){
+            opcao_atual = num_opcoes;
+        }
+        else{
+            opcao_atual--;
+        }
+    }
+
+    BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawText("RPG Sheet C", (GetScreenWidth() - MeasureText("RPG Sheet C", GetScreenHeight() * 0.10)) / 2, (GetScreenHeight() * 0.20), GetScreenHeight() * 0.10, BLACK);
+
+        switch(opcao_atual){
+            case 1:
+                strcpy(raca, "Humano");
+                break;
+            case 2:
+                strcpy(raca, "Elfo");
+                break;
+            case 3:
+                strcpy(raca, "Anão");
+                break;
+            case 4:
+                strcpy(raca, "Goblin");
+                break;
+            case 5:
+                strcpy(raca, "Minotauro");
+                break;
+            case 6:
+                strcpy(raca, "Draconato");
+                break;
+        }
+        DrawText(">", (GetScreenWidth() - MeasureText(raca, GetScreenHeight() * 0.05)) / 2, (GetScreenHeight() * 0.50) + (opcao_atual * (GetScreenHeight() * 0.05)), GetScreenHeight() * 0.05, BLACK);
+        
     EndDrawing();
 }

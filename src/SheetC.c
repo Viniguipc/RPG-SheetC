@@ -13,7 +13,7 @@ int main(){
 	int estado_atual = 0; // Inicializando com 0 para iniciar no Menu Inicial
 
 	// Inicializa a janela da aplicação usando a resolução do monitor
-	InitWindow(GetScreenWidth(), GetScreenHeight(), "RPG Sheet C");
+	InitWindow(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), "RPG Sheet C");
 	SetTargetFPS(60); // Define a taxa de atualização para 60 frames por segundo
 	
 	// Loop principal: executa até o usuário fechar a janela ou o estado atual ser 3 (Sair)

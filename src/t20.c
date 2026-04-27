@@ -11,19 +11,19 @@ int criar_sheet_t20(){
 
     switch(estado_t20){
         case 0:
-            nome(new_sheet.nome);
+            digitar_nome(new_sheet.nome);
             if(IsKeyReleased(KEY_ENTER)){
                 estado_t20 = 1;
             }
             break;
         case 1:
-            nome(new_sheet.raca);
+            escolher_raca(new_sheet.raca);
             if(IsKeyReleased(KEY_ENTER)){
                 estado_t20 = 2;
             }
             break;
         case 2:
-            nome(new_sheet.classe);
+            digitar_nome(new_sheet.classe);
             if(IsKeyReleased(KEY_ENTER)){
                 estado_t20 = 3;
             }
@@ -55,7 +55,7 @@ int criar_sheet_t20(){
     return 4;
 }
 
-// Carrega os dados de uma ficha T20 (A ser implementado)
+// Carrega os dados de uma ficha T20
 void load_sheet_t20(T20 *t20){
     FILE *arq;
 
